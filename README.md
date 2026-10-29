@@ -125,7 +125,7 @@ Configuration:
 | Setting               | Example |
 
 | Network name          |  NatNeworkLab |
-| IPv4 network          | 10.0.0.4/24 |
+| IPv4 network          | 10.0.0.1/24 |
 | DHCP                  | Enabled |
 | Network mode          | NAT Network |
 | Intended use          | Communication between lab VMs |
@@ -150,7 +150,7 @@ Configure the network adapter:
 2. Open **Settings → Network**.
 3. Enable Adapter 1.
 4. Set **Attached to** to `NAT Network`.
-5. Select `CyberLab-NAT`.
+5. Select `NatNeworkLab`.
 6. Save the configuration and start the VM.
 
 Verify the network configuration inside Kali:
@@ -214,6 +214,11 @@ Configure the network adapter:
 
 Android images differ in how they expose network settings, obtain IP addresses, and support debugging. If the selected image does not support the expected VirtualBox network configuration, consult its documentation before changing adapter types.
 
+**Problem Encounter**
+*Compability issues between Andriod-x86 9.0-r2 and VirtualBox 7.22 VMSVGA controller.*
+**SOLUTION:** Change graphics controller to VBoxSVGA if VmsVGA was initially sellected and disabled 3D accelaration.
+Set Video Memory to 128MB and change boot order to Hardisk then disabled flopydisk.
+
 Step 6: Enable Shared Clipboard and Drag-and-Drop
 
 VirtualBox provides clipboard and drag-and-drop integration for supported guest operating systems.
@@ -267,38 +272,35 @@ Example addressing table:
 
 | Virtual machine | Example IP address |
 
-| Kali Linux | 10.10.10.10 |
-| Windows 10 | 10.10.10.11 |
-| Android OS | 10.10.10.12 |
+| Kali Linux      | 10.0.0.2 |
+| Windows 10      | 10.0.0.5 |
+| Android OS      | 10.0.0.9 |
 
-These addresses are examples only. DHCP may assign different addresses, so use the values observed in the lab.
 
  Test 2: Test connectivity from Kali Linux
 
-Use the actual Windows VM address:
 
 ```bash
-ping -c 4 <WINDOWS_VM_IP>
+ping -c 4 <10.0.0.5>
 ```
 
 Test Android connectivity if its networking tools permit:
 
 ```bash
-ping -c 4 <ANDROID_VM_IP>
+ping -c 4 <10.0.0.9>
 ```
 
 A successful ping indicates that ICMP traffic is reaching the destination and returning a response. A failed ping does not necessarily mean the network is broken because host firewalls may block ICMP.
 
-### Test 3: Test connectivity from Windows 10
+Test 3: Test connectivity from Windows 10
 
 Open Command Prompt:
 
 ```cmd
-ping <KALI_VM_IP>
-ping <ANDROID_VM_IP>
+ping <10.0.02>
+ping <10.0.0.9>
 ```
 
-Replace the placeholders with the actual IP addresses of the other virtual machines.
 
 If ping fails, check:
 
@@ -343,7 +345,7 @@ Use this checklist to document the final state of the lab.
 - [ ] Kali Linux installed and booting correctly.
 - [ ] Windows 10 installed and booting correctly.
 - [ ] Android OS installed and booting correctly.
-- [ ] `CyberLab-NAT` created and enabled.
+- [ ] `NatNetworkLab` created and enabled.
 - [ ] All VMs attached to the same NAT Network.
 - [ ] IP addresses assigned and recorded.
 - [ ] Internal connectivity tested between the VMs.
@@ -380,7 +382,7 @@ A NAT Network provides network address translation, but it is not a complete sec
 10. Troubleshooting
 
 | Problem | Possible cause | Recommended action |
-|---|---|---|
+
 | VM cannot obtain an IP address | DHCP disabled or adapter misconfigured | Check NAT Network settings and DHCP status |
 | VMs cannot communicate | Different virtual networks or firewall restrictions | Confirm all VMs use `CyberLab-NAT`; review firewall rules |
 | Internet access fails | Host connection, DNS, or NAT configuration issue | Test host connectivity, DNS resolution, and outbound access |
