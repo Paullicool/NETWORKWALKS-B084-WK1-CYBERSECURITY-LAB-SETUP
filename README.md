@@ -1,6 +1,6 @@
-# Cybersecurity Virtual Lab: VirtualBox, Kali Linux, Windows 10 & Android OS
+ Cybersecurity Virtual Lab: VirtualBox, Kali Linux, Windows 10 & Android OS
 
-## 1. Project Overview
+ 1. Project Overview
 
 This project involves building a virtualised cybersecurity laboratory using Oracle VirtualBox to create an isolated environment for cybersecurity learning, network configuration, system administration and authorised security testing.
 
@@ -10,7 +10,7 @@ Additional configurations include enabling shared clipboard and drag-and-drop fu
 
 The primary objective is to develop a functional, controlled and repeatable environment for cybersecurity experiments without exposing the host system or external networks to unnecessary risk.
 
-## 2. Project Objectives
+2. Project Objectives
 
 The objectives of this project are to:
 
@@ -24,7 +24,7 @@ The objectives of this project are to:
 - Establish a controlled environment for vulnerability assessment, network analysis and security experimentation.
 - Document the configuration and validation process for reproducibility.
 
-## 3. Technologies and Tools
+ 3. Technologies and Tools
 
 |          Technology           |                         Purpose                                                 |
 
@@ -39,7 +39,7 @@ The objectives of this project are to:
 
 **Note:** Android deployment depends on the selected image. Android-x86, a compatible Android virtual machine image, or an Android emulator can be used. VirtualBox compatibility and Guest Additions support vary by image.
 
-## 4. Lab Architecture
+4. Lab Architecture
 
 The lab uses a shared NAT Network to connect the virtual machines.
 
@@ -59,7 +59,7 @@ The lab uses a shared NAT Network to connect the virtual machines.
                 Internal Communication
 ```
 
-### Network design
+Network design
 
 - **Kali Linux:** Primary security testing and analysis machine.
 - **Windows 10:** Target system for authorised security assessment.
@@ -71,18 +71,18 @@ A VirtualBox NAT Network differs from the default per-VM NAT mode. A shared NAT 
 
 The exact IP addresses depend on the NAT Network subnet and DHCP configuration selected during setup.
 
-## 5. Prerequisites
+5. Prerequisites
 
 Before beginning the installation, ensure that the host computer meets the following requirements.
 
-### Hardware requirements
+Hardware requirements
 
 - A 64-bit processor supporting hardware virtualisation.
 - Sufficient RAM for simultaneous virtual machine operation; 16 GB or more is recommended for a multi-VM lab.
 - Adequate SSD storage for operating system images, virtual disks, and snapshots.
 - A stable internet connection for downloading operating systems, updates, and tools.
 
-### Software requirements
+ Software requirements
 
 - Oracle VirtualBox.
 - A compatible Kali Linux image.
@@ -94,9 +94,9 @@ Enable Intel VT-x or AMD-V in the computer's firmware settings if hardware virtu
 
 **Windows 10 lifecycle note:** Standard Windows 10 support ended on 14 October 2025. Use a properly licensed installation, keep the VM isolated, and consider a supported Windows version for ongoing testing where compatibility permits.
 
-## 6. Installation and Configuration
+ 6. Installation and Configuration
 
-### Step 1: Install Oracle VirtualBox
+Step 1: Install Oracle VirtualBox
 
 1. Download VirtualBox from the official website: https://www.virtualbox.org/
 2. Select the installer compatible with the host operating system.
@@ -106,7 +106,7 @@ Enable Intel VT-x or AMD-V in the computer's firmware settings if hardware virtu
 
 Official documentation: https://www.virtualbox.org/manual/
 
-### Step 2: Create the NAT Network
+ Step 2: Create the NAT Network
 
 Create a shared NAT Network before connecting the virtual machines.
 
@@ -114,8 +114,8 @@ Create a shared NAT Network before connecting the virtual machines.
 2. Navigate to **Tools → Network** or the NAT Network management section available in your VirtualBox version.
 3. Open the NAT Networks tab.
 4. Create a new NAT Network.
-5. Assign the network a name, such as `CyberLab-NAT`.
-6. Configure a private IPv4 subnet, for example `10.10.10.0/24`, after checking that it does not conflict with existing networks.
+5. Assign the network a name, such as `NatNeworkLab`.
+6. Configure a private IPv4 subnet, for example `10.0.0.1/24`, after checking that it does not conflict with existing networks.
 7. Enable DHCP if automatic IP addressing is required.
 8. Enable or activate the NAT Network.
 9. Save the configuration.
@@ -124,15 +124,15 @@ Configuration:
 
 | Setting               | Example |
 
-| Network name          | CyberLab-NAT |
-| IPv4 network          | 10.10.10.0/24 |
+| Network name          |  NatNeworkLab |
+| IPv4 network          | 10.0.0.4/24 |
 | DHCP                  | Enabled |
 | Network mode          | NAT Network |
 | Intended use          | Communication between lab VMs |
 
 
 
-### Step 3: Install Kali Linux
+ Step 3: Install Kali Linux
 
 1. Download the appropriate Kali Linux installer from https://www.kali.org/get-kali/.
 2. In VirtualBox, select **New** to create a virtual machine.
@@ -163,7 +163,7 @@ ifconfig
 
 If DHCP is enabled, confirm that the VM receives an address within the configured subnet.
 
-### Step 4: Install Windows 10
+ Step 4: Install Windows 10
 
 1. Obtain a legitimate Windows 10 ISO from an authorised source.
 2. Create a new VM named `Windows-10`.
@@ -180,7 +180,7 @@ Configure its network:
 1. Open **Settings → Network** for the Windows VM.
 2. Enable Adapter 1.
 3. Select `NAT Network` as the attachment type.
-4. Choose `CyberLab-NAT`.
+4. Choose `NatNeworkLab`.
 5. Start the VM.
 
 Open Command Prompt and verify the network configuration:
@@ -191,7 +191,7 @@ ipconfig /all
 
 Check that Windows has an IPv4 address in the expected subnet and a valid default gateway.
 
-### Step 5: Install Android OS
+Step 5: Install Android OS
 
 Android deployment requires an image compatible with the chosen virtualisation method.
 
@@ -209,12 +209,12 @@ Configure the network adapter:
 1. Open the Android VM's **Settings → Network**.
 2. Enable Adapter 1.
 3. Select `NAT Network`.
-4. Choose `CyberLab-NAT`.
+4. Choose `NatNeworkLab`.
 5. Start Android and verify that its network interface is active.
 
 Android images differ in how they expose network settings, obtain IP addresses, and support debugging. If the selected image does not support the expected VirtualBox network configuration, consult its documentation before changing adapter types.
 
-### Step 6: Enable Shared Clipboard and Drag-and-Drop
+Step 6: Enable Shared Clipboard and Drag-and-Drop
 
 VirtualBox provides clipboard and drag-and-drop integration for supported guest operating systems.
 
@@ -235,15 +235,15 @@ Guest Additions may be installed from the running VM through:
 
 Follow the guest-specific installation instructions and restart the VM if necessary.
 
-**Android limitation:** Shared clipboard and drag-and-drop are not guaranteed to work in Android-x86 or other Android guest images. Their availability depends on guest integration support. If the features are unsupported, use a documented alternative such as ADB for authorised file transfers and debugging.
+*Android limitation:* Shared clipboard and drag-and-drop are not guaranteed to work in Android-x86 or other Android guest images. Their availability depends on guest integration support. If the features are unsupported, use a documented alternative such as ADB for authorised file transfers and debugging.
 
 Only transfer files that are trusted and necessary for the lab.
 
-## 7. Network Connectivity Testing
+7. Network Connectivity Testing
 
 Once all virtual machines are configured, verify that they can communicate over the shared NAT Network.
 
-### Test 1: Check IP addresses
+ Test 1: Check IP addresses
 
 On Kali Linux:
 
@@ -273,7 +273,7 @@ Example addressing table:
 
 These addresses are examples only. DHCP may assign different addresses, so use the values observed in the lab.
 
-### Test 2: Test connectivity from Kali Linux
+ Test 2: Test connectivity from Kali Linux
 
 Use the actual Windows VM address:
 
@@ -309,7 +309,7 @@ If ping fails, check:
 - Whether the destination firewall blocks ICMP.
 - Whether the guest operating system has disabled its network interface.
 
-### Test 4: Test external connectivity
+Test 4: Test external connectivity
 
 If outbound internet access is required, test DNS resolution and access to an authorised external endpoint.
 
@@ -335,7 +335,7 @@ These tests help distinguish DNS resolution problems from general network connec
 
 External access is provided by the NAT Network configuration when enabled and supported by the host network. It should not be assumed to work until tested.
 
-## 8. Validation Checklist
+8. Validation Checklist
 
 Use this checklist to document the final state of the lab.
 
@@ -358,7 +358,7 @@ Use this checklist to document the final state of the lab.
 
 Only mark an item as complete after verifying it in the running environment.
 
-## 9. Security Considerations
+9. Security Considerations
 
 This lab is designed for controlled, authorised cybersecurity experimentation.
 
@@ -377,7 +377,7 @@ Recommended safeguards include:
 
 A NAT Network provides network address translation, but it is not a complete security boundary. Host compromise, guest integration features, exposed services, and misconfiguration can create additional risks.
 
-## 10. Troubleshooting
+10. Troubleshooting
 
 | Problem | Possible cause | Recommended action |
 |---|---|---|
@@ -390,7 +390,7 @@ A NAT Network provides network address translation, but it is not a complete sec
 | Ping fails but internet works | ICMP blocked by firewall | Review firewall rules and use an authorised TCP/HTTPS connectivity test |
 | VM runs slowly | Insufficient host resources | Adjust RAM, CPU allocation, and graphics settings |
 
-## 11. Suggested Cybersecurity Experiments
+11. Suggested Cybersecurity Experiments
 
 After validating the environment, the lab can support several controlled projects:
 
@@ -404,7 +404,7 @@ After validating the environment, the lab can support several controlled project
 
 All experiments should be conducted only on systems and applications that you own or are explicitly authorised to test.
 
-## 12. Project Outcomes
+12. Project Outcomes
 
 The completed lab should provide a repeatable virtual environment for practising cybersecurity skills across Linux, Windows, and Android.
 
@@ -418,7 +418,7 @@ Expected outcomes include:
 - A documented lab environment suitable for a cybersecurity portfolio.
 
 
-## 13. Future Improvements
+13. Future Improvements
 
 Potential improvements include:
 
@@ -431,7 +431,7 @@ Potential improvements include:
 - Maintaining a lab inventory, version history, and network diagram.
 
 
-## 14. References
+14. References
 
 - Oracle VirtualBox: https://www.virtualbox.org/
 - VirtualBox User Manual: https://www.virtualbox.org/manual/
@@ -441,11 +441,16 @@ Potential improvements include:
 - Android Debug Bridge (ADB): https://developer.android.com/tools/adb
 - Microsoft Windows lifecycle information: https://learn.microsoft.com/en-us/lifecycle/products/windows-10-home-and-pro
 
-## 16. Author and Project Information
+16. Author and Project Information
 
 **Project:** Cybersecurity Virtual Lab Setup and Network Validation
 
 **Focus Areas:** Virtualisation, Network Configuration, Cybersecurity Testing, Linux Administration, Windows Security and Android Security Research.
+
+Platform: Oracle VirtualBox
+
+Author: Paul O. Ogbaji
+
 
 
 
